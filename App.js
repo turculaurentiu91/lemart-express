@@ -1,5 +1,5 @@
 import React from 'react';
-import {ToastAndroid} from 'react-native';
+import {ToastAndroid, Platform} from 'react-native';
 import { 
   SecureStore,
   Asset,
@@ -66,6 +66,13 @@ export default class App extends React.Component {
   componentDidMount() {
     SplashScreen.preventAutoHide();
     //SecureStore.deleteItemAsync('user-data')
+
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('notifiche-publicitare', {
+        name: 'Notifiche Publicitare',
+        sound: true,
+      });
+    }
 
     this.registerExponentPushToken()
     .catch(error => {
