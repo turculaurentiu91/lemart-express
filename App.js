@@ -1,16 +1,26 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {ToastAndroid} from 'react-native';
 import { 
   SecureStore,
   Asset,
   Font,
   AppLoading,
   SplashScreen,
+  Permissions,
+  Notifications,
  } from 'expo';
 import Layout from './components/Layout';
 import RegisterForm from './components/RegisterForm';
 import RequestForm from './components/RequestForm';
 import { Feather } from '@expo/vector-icons';
+import SubmitButton from './components/SubmitButton';
+
+import {
+  widthPercentageToDP as wp, 
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen';
+
+const HOST = 'http://68.183.218.42';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -19,12 +29,50 @@ export default class App extends React.Component {
     this.state = {
       isReady: false,
       userData: null,
+      submitted: false,
     };
+  }
+
+  registerExponentPushToken = async () => {
+    const PUSH_ENDPOINT = `${HOST}/api/exponent-push-token`;
+
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+    
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+  
+    if (finalStatus !== 'granted') {
+      throw new Error("Permission not granted");
+    }
+
+    const token = await Notifications.getExpoPushTokenAsync();
+    return fetch(PUSH_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        token
+      }),
+    });
   }
 
   componentDidMount() {
     SplashScreen.preventAutoHide();
     //SecureStore.deleteItemAsync('user-data')
+
+    this.registerExponentPushToken()
+    .catch(error => {
+      if ( error.message == "Permission not granted" ) {
+        return;
+      }
+    });
   }
   
   isUserRegistered = () => typeof this.state.userData !== 'undefined';
@@ -46,6 +94,35 @@ export default class App extends React.Component {
   setUserData = userData => {
     SecureStore.setItemAsync('user-data', JSON.stringify(userData));
     this.setState({userData});
+  }
+
+  submitRequest = request => {
+    const finalRequest = {
+      ...request,
+      ...this.state.userData,
+    };
+
+    fetch(`${HOST}/api/express-request`, {
+      method: 'POST',
+      body: JSON.stringify(finalRequest),
+      headers: { 
+        Accept: 'application/json',
+        'Content-Type': 'application/json', 
+      }
+    })
+    .then(res => {
+      this.setState({submitted: true});
+
+      setTimeout(() => this.setState({submitted: false}), 2000);
+    })
+    .catch(e => {
+      ToastAndroid.showWithGravity(
+        'Si è verificato un errore sul nostro server, riprova più tardi.', 
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER,
+      );
+      //console.log(e);
+    });
   }
 
   async _cacheResourcesAsync() {
@@ -70,12 +147,39 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.isReady) {
+
+      const textStyle = {
+        fontSize: wp('4%'),
+        margin: wp('2%'),
+        fontWeight: 'bold',
+      };
+
       return(
         <Layout userData = { this.state.userData }>
-          {
-            this.state.userData 
-            ? <RequestForm />
-            : <RegisterForm setUserData = { this.setUserData } />
+          { 
+            this.state.submitted 
+            ? <View style={{
+              marginTop: hp('25%'),
+              padding: hp('2%'),
+            }}>
+                <View style={{
+                  alignContent: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'rgba(255, 255, 255, .6)',
+                  borderRadius: wp('5%'),
+                  marginBottom: hp('5%'),
+                  padding: hp('2%'),
+                }}>
+                  <Text style={textStyle}>GRAZIE,</Text>          
+                  <Text style={[textStyle]}> INIZIA AD USARE DA SUBITO L'APP</Text>
+                </View>
+                <SubmitButton onPress={() => this.setState({submitted: false})}>
+                  TORNA INDIETRO
+                </SubmitButton>
+              </View>
+            : this.state.userData 
+              ? <RequestForm submitForm = { this.submitRequest }/>
+              : <RegisterForm setUserData = { this.setUserData } />
           }
         </Layout>
       );

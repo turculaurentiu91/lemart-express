@@ -36,9 +36,11 @@ export default class RequestForm extends React.Component {
     },
     weight: {
       type: 'numeric',
+      min: 1,
     },
     total: {
       type: 'numeric',
+      min: 1,
     },
     person: {
       min: 2,
@@ -65,6 +67,10 @@ export default class RequestForm extends React.Component {
       this.setState({errors: validationErrors});
       return;
     }
+    this.props.submitForm({
+      ...this.state.formData,
+      images: this.state.formData.images.map(img => img.base64),
+    });
   }
 
   selectImage = img => {

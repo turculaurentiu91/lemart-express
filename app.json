@@ -26,7 +26,12 @@
       "supportsTablet": true
     },
 	"android": {
-		"package": "com.turculaurentiu.lemart_express"
+    "package": "it.lemart.lemart_express",
+    "permissions": [
+      "READ_EXTERNAL_STORAGE",
+      "WRITE_EXTERNAL_STORAGE",
+      "CAMERA"
+    ]
 	},
     "description": ""
   }

@@ -31,8 +31,8 @@ export default class ImageSelector extends React.Component {
       );
     }
 
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: 'Images',
+    const result = await ImagePicker.launchCameraAsync({
+      //allowsEditing: true,
       quality: 0.5,
       base64: true,
     });

@@ -3,6 +3,10 @@ import { View, Text, KeyboardAvoidingView } from 'react-native';
 import StringFormatValidation from 'string-format-validation';
 import SubmitButton from './SubmitButton';
 import Input from './Input';
+import {
+  widthPercentageToDP as wp, 
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen';
 
 export default class RegisterForm extends React.Component {
 
@@ -64,6 +68,7 @@ export default class RegisterForm extends React.Component {
         keyboardVerticalOffset = { 20 } 
         style = {{
           padding: 30,
+          marginTop: wp('25%')
         }}
       >
         <Text
