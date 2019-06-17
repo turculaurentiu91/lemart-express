@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "799410033040",
+    "firebase_url": "https://lemart-express.firebaseio.com",
+    "project_id": "lemart-express",
+    "storage_bucket": "lemart-express.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799410033040:android:02e7d5ef639c6559",
+        "android_client_info": {
+          "package_name": "it.lemart.lemart_express"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799410033040-pq8op03llpsq3hgt6abqenl9lv1l1ptf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATy56d7QAZJ9U1M2_6k21GyKc8Uc0VL8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799410033040-pq8op03llpsq3hgt6abqenl9lv1l1ptf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

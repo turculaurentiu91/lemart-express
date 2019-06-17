@@ -1,5 +1,5 @@
 import React from 'react';
-import {ToastAndroid, Platform} from 'react-native';
+import {ToastAndroid, Platform, View, Text} from 'react-native';
 import { 
   SecureStore,
   Asset,
@@ -128,7 +128,7 @@ export default class App extends React.Component {
         ToastAndroid.LONG,
         ToastAndroid.CENTER,
       );
-      //console.log(e);
+      console.log(e);
     });
   }
 
