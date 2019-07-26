@@ -19,8 +19,7 @@ export default class RequestForm extends React.Component {
     this.state = {
       formData: {
         model: '',
-        weight: '',
-        total: '',
+        request_address: '',
         person: '',
         damage: '',
         images: [],
@@ -34,13 +33,8 @@ export default class RequestForm extends React.Component {
     model: {
       min: 2,
     },
-    weight: {
-      type: 'numeric',
-      min: 1,
-    },
-    total: {
-      type: 'numeric',
-      min: 1,
+    request_address: {
+      min: 2,
     },
     person: {
       min: 2,
@@ -119,21 +113,13 @@ export default class RequestForm extends React.Component {
         />
 
         <Input
-          value = { this.state.formData.weight }
-          onChangeText = { value => this.setState({ formData: { ...this.state.formData, weight: value } }) }
-          placeholder = "Peso kg"
-          haveError = { this.haveError('weight') }
-          placeholderTextColor = "#333"
-          keyboardType = 'numeric'
-        />
-
-        <Input
-          value = { this.state.formData.total }
-          onChangeText = { value => this.setState({ formData: { ...this.state.formData, total: value } }) }
-          placeholder = "Numero pianali totale"
-          keyboardType = 'numeric'
+          value = { this.state.formData.request_address }
+          onChangeText = { value => this.setState({ formData: { ...this.state.formData, request_address: value } }) }
+          placeholder = "Indirizzo Richiesta Intervento"
+          keyboardType = 'default'
           haveError = { this.haveError('total') }
           placeholderTextColor = "#333"
+          textContentType = "addressCityAndState"
         />
 
         <Input
