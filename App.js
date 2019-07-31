@@ -1,14 +1,10 @@
 import React from 'react';
 import {ToastAndroid, Platform, View, Text} from 'react-native';
-import { 
-  SecureStore,
-  Asset,
-  Font,
-  AppLoading,
-  SplashScreen,
-  Permissions,
-  Notifications,
- } from 'expo';
+import { AppLoading, SplashScreen, Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import * as Font from 'expo-font';
+import { Asset } from 'expo-asset';
+import * as SecureStore from 'expo-secure-store';
 import Layout from './components/Layout';
 import RegisterForm from './components/RegisterForm';
 import RequestForm from './components/RequestForm';
@@ -20,7 +16,7 @@ import {
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
 
-const HOST = 'http://68.183.218.42';
+const HOST = 'https://app.lemart.it';
 
 export default class App extends React.Component {
   constructor(props) {

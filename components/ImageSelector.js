@@ -2,7 +2,8 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import ImageTile from './ImageTile';
 import { Feather } from '@expo/vector-icons';
-import { ImagePicker, Permissions, } from 'expo';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 import {
   widthPercentageToDP as wp, 
   heightPercentageToDP as hp

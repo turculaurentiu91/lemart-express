@@ -3,16 +3,15 @@
     "name": "Express",
     "slug": "lemart-express",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "33.0.0",
     "platforms": [
-      "ios",
       "android"
     ],
     "notification": {
       "icon": "./assets/icona2-96.png",
       "color": "#000000"
     },
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -32,7 +31,7 @@
 	"android": {
 		"package": "it.lemart.lemart_express",
     "googleServicesFile": "./google-services.json",
-    "versionCode": 102,
+    "versionCode": 103,
 		"permissions": [
 		  "READ_EXTERNAL_STORAGE",
 		  "WRITE_EXTERNAL_STORAGE",
