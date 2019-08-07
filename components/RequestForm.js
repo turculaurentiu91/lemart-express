@@ -2,6 +2,7 @@ import React from 'react';
 import { 
   KeyboardAvoidingView,
   View,
+  Picker
 } from 'react-native';
 import Input from './Input';
 import SubmitButton from './SubmitButton';
@@ -19,7 +20,7 @@ export default class RequestForm extends React.Component {
     this.state = {
       formData: {
         model: '',
-        request_address: '',
+        weight: '1/50',
         person: '',
         damage: '',
         images: [],
@@ -33,7 +34,7 @@ export default class RequestForm extends React.Component {
     model: {
       min: 2,
     },
-    request_address: {
+    weight: {
       min: 2,
     },
     person: {
@@ -107,20 +108,31 @@ export default class RequestForm extends React.Component {
         <Input
           value = { this.state.formData.model }
           onChangeText = { value => this.setState({ formData: { ...this.state.formData, model: value } }) }
-          placeholder = "Marca, modello e tipo"
+          placeholder = "Marca modello e tipo"
           haveError = { this.haveError('model') }
           placeholderTextColor = "#333"
         />
 
-        <Input
-          value = { this.state.formData.request_address }
-          onChangeText = { value => this.setState({ formData: { ...this.state.formData, request_address: value } }) }
-          placeholder = "Indirizzo Richiesta Intervento"
-          keyboardType = 'default'
-          haveError = { this.haveError('total') }
-          placeholderTextColor = "#333"
-          textContentType = "addressCityAndState"
-        />
+
+        <View style={{
+          fontSize: 15,
+          borderStyle: 'solid',
+          borderColor: '#333',
+          borderWidth: 2,
+          marginBottom: hp('2%'),
+          //padding: wp('2%'),
+          paddingLeft: wp('3%'),
+        }}>
+          <Picker
+            selectedValue={this.state.formData.weight}
+            onValueChange={val => this.setState({ formData: { ...this.state.formData, weight: val } }) }
+          >
+            <Picker.Item label="Peso: Meno di 50kg" value="1/50" />
+            <Picker.Item label="Peso: Tra 51kg e 100kg" value="51/100" />
+            <Picker.Item label="Peso: Piu di 100kg" value=">100" />
+          </Picker>
+        </View>
+
 
         <Input
           value = { this.state.formData.person }
